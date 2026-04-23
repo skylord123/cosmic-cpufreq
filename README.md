@@ -2,12 +2,14 @@
 
 A COSMIC applet for inspecting and changing CPU frequency scaling settings on Linux.
 
-It is intended as a COSMIC equivalent of the older GNOME `cpufreq` extension workflow:
+Features:
 - show current average CPU frequency in the panel
 - toggle turbo boost
 - change CPU governor
 - change energy performance preference when available
 - adjust minimum and maximum scaling frequency
+
+![cosmic-cpufreq-image](img.png)
 
 ## Requirements
 
