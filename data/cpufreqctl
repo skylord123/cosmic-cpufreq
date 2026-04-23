@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# Helper script for cosmic-ext-applet-cpufreq
+# Executed via pkexec with automatic polkit authorization
+
+FLROOT=/sys/devices/system/cpu
+cpucount=$(nproc)
+
+case "$1" in
+  turbo-get)
+    if [ -f "$FLROOT/intel_pstate/no_turbo" ]; then
+      cat "$FLROOT/intel_pstate/no_turbo"
+    elif [ -f "$FLROOT/cpufreq/boost" ]; then
+      cat "$FLROOT/cpufreq/boost"
+    else
+      echo "unsupported"
+      exit 1
+    fi
+    ;;
+
+  turbo-set)
+    if [ -f "$FLROOT/intel_pstate/no_turbo" ]; then
+      echo "$2" > "$FLROOT/intel_pstate/no_turbo"
+    elif [ -f "$FLROOT/cpufreq/boost" ]; then
+      echo "$2" > "$FLROOT/cpufreq/boost"
+    else
+      echo "unsupported"
+      exit 1
+    fi
+    ;;
+
+  governor-set)
+    for policy in "$FLROOT"/cpufreq/policy*/scaling_governor; do
+      [ -f "$policy" ] && echo "$2" > "$policy"
+    done
+    ;;
+
+  epp-set)
+    for epp in "$FLROOT"/cpufreq/policy*/energy_performance_preference; do
+      [ -f "$epp" ] && echo "$2" > "$epp"
+    done
+    ;;
+
+  freq-min-set)
+    for f in "$FLROOT"/cpufreq/policy*/scaling_min_freq; do
+      [ -f "$f" ] && echo "$2" > "$f"
+    done
+    ;;
+
+  freq-max-set)
+    for f in "$FLROOT"/cpufreq/policy*/scaling_max_freq; do
+      [ -f "$f" ] && echo "$2" > "$f"
+    done
+    ;;
+
+  min-perf-set)
+    if [ -f "$FLROOT/intel_pstate/min_perf_pct" ]; then
+      echo "$2" > "$FLROOT/intel_pstate/min_perf_pct"
+    else
+      echo "unsupported"
+      exit 1
+    fi
+    ;;
+
+  max-perf-set)
+    if [ -f "$FLROOT/intel_pstate/max_perf_pct" ]; then
+      echo "$2" > "$FLROOT/intel_pstate/max_perf_pct"
+    else
+      echo "unsupported"
+      exit 1
+    fi
+    ;;
+
+  install)
+    # $2 = path to the local cpufreqctl script
+    # $3 = path to the polkit policy file
+    if [ -z "$2" ] || [ -z "$3" ]; then
+      echo "Usage: cpufreqctl install <helper-path> <policy-path>"
+      exit 1
+    fi
+    echo "Installing cpufreqctl to /usr/bin/..."
+    cp "$2" /usr/bin/cpufreqctl
+    chmod 755 /usr/bin/cpufreqctl
+    echo "Installing polkit policy..."
+    cp "$3" /usr/share/polkit-1/actions/
+    echo "Done."
+    ;;
+
+  uninstall)
+    echo "Removing cpufreqctl from /usr/bin/..."
+    rm -f /usr/bin/cpufreqctl
+    echo "Removing polkit policy..."
+    rm -f /usr/share/polkit-1/actions/dev.skylar.cosmic-ext-applet-cpufreq.policy
+    echo "Done."
+    ;;
+
+  *)
+    echo "Usage: cpufreqctl {turbo-get|turbo-set|governor-set|epp-set|freq-min-set|freq-max-set|min-perf-set|max-perf-set|install|uninstall} [value]"
+    exit 1
+    ;;
+esac

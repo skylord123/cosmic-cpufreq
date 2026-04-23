@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=CPU Frequency Control
+Keywords=CPU;Frequency;Turbo;Performance;
+Categories=System;
+
+Type=Application
+Exec=cosmic-ext-applet-cpufreq
+Terminal=false
+StartupNotify=true
+NoDisplay=true
+X-CosmicApplet=true
+X-CosmicHoverPopup=Auto
