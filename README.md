@@ -35,7 +35,7 @@ just install
 
 This places:
 - the applet at `~/.local/bin/cosmic-ext-applet-cpufreq`
-- the helper at `~/.local/bin/cpufreqctl`
+- the helper at `~/.local/bin/cosmic-cpufreqctl`
 - the policy template at `~/.local/bin/dev.skylar.cosmic-ext-applet-cpufreq.policy`
 - the desktop file at `~/.local/share/applications/dev.skylar.cosmic-ext-applet-cpufreq.desktop`
 
@@ -55,7 +55,7 @@ If the applet is already running, reload it in COSMIC so the new binary is actua
 If you need to force a clean helper/policy reinstall, remove the system copies:
 
 ```bash
-pkexec /usr/bin/cpufreqctl uninstall
+pkexec /usr/bin/cosmic-cpufreqctl uninstall
 ```
 
 Then change a setting in the applet again to trigger reinstallation of the current helper and policy.
@@ -86,5 +86,5 @@ just uninstall
 Remove the system helper and polkit policy:
 
 ```bash
-pkexec /usr/bin/cpufreqctl uninstall
+pkexec /usr/bin/cosmic-cpufreqctl uninstall
 ```

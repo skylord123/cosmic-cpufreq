@@ -18,6 +18,7 @@ libcosmic = { git = "https://github.com/pop-os/libcosmic", default-features = fa
 	"applet",
 ] }
 rust-embed = { version = "8.11.0", default-features = false }
+serde = { version = "1", default-features = false, features = ["derive"] }
 tracing = { version = "0.1.44", default-features = false, features = ["log"] }
 tracing-subscriber = { version = "0.3.23", default-features = false, features = [
 	"ansi",

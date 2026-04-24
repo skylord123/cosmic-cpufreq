@@ -9,9 +9,8 @@
     <defaults>
       <allow_any>auth_admin</allow_any>
       <allow_inactive>auth_admin</allow_inactive>
-      <allow_active>auth_admin_keep</allow_active>
+      <allow_active>yes</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">/bin/bash</annotate>
-    <annotate key="org.freedesktop.policykit.exec.argv1">/usr/bin/cpufreqctl</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/cosmic-cpufreqctl</annotate>
   </action>
 </policyconfig>

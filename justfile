@@ -16,7 +16,7 @@ base-dir := absolute_path(clean(rootdir / prefix))
 share-dst := base-dir / 'share'
 
 bin-dst := base-dir / 'bin' / NAME
-helper-dst := base-dir / 'bin' / 'cpufreqctl'
+helper-dst := base-dir / 'bin' / 'cosmic-cpufreqctl'
 desktop-dst := share-dst / 'applications' / APPID + '.desktop'
 polkit-dst := '/usr/share/polkit-1/actions' / APPID + '.policy'
 

@@ -3,6 +3,9 @@
 # Helper script for cosmic-ext-applet-cpufreq
 # Executed via pkexec with automatic polkit authorization
 
+HELPER_DST=/usr/bin/cosmic-cpufreqctl
+POLICY_DST=/usr/share/polkit-1/actions/dev.skylar.cosmic-ext-applet-cpufreq.policy
+
 FLROOT=/sys/devices/system/cpu
 cpucount=$(nproc)
 
@@ -78,19 +81,19 @@ case "$1" in
       echo "Usage: cpufreqctl install <helper-path> <policy-path>"
       exit 1
     fi
-    echo "Installing cpufreqctl to /usr/bin/..."
-    cp "$2" /usr/bin/cpufreqctl
-    chmod 755 /usr/bin/cpufreqctl
+    echo "Installing cpufreq helper to $HELPER_DST..."
+    cp "$2" "$HELPER_DST"
+    chmod 755 "$HELPER_DST"
     echo "Installing polkit policy..."
-    cp "$3" /usr/share/polkit-1/actions/
+    cp "$3" "$POLICY_DST"
     echo "Done."
     ;;
 
   uninstall)
-    echo "Removing cpufreqctl from /usr/bin/..."
-    rm -f /usr/bin/cpufreqctl
+    echo "Removing cpufreq helper from $HELPER_DST..."
+    rm -f "$HELPER_DST"
     echo "Removing polkit policy..."
-    rm -f /usr/share/polkit-1/actions/dev.skylar.cosmic-ext-applet-cpufreq.policy
+    rm -f "$POLICY_DST"
     echo "Done."
     ;;
 
